@@ -19,7 +19,7 @@
        scripts-workflow/group_platforms.sh regroups, --check verifies
      HTML comments are stripped by the update dialog's sanitizer and hidden on
      GitHub, so they never reach users. -->
-## v2.6.0
+## v2.6.1
 
 <details>
 <summary><strong> 🐞 修复问题 </strong></summary>
