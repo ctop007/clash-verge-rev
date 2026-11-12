@@ -10,7 +10,6 @@ use crate::{
 };
 use anyhow::{Context as _, Result, bail};
 use serde::{Deserialize, Serialize};
-use serde_yaml_ng::Mapping;
 use smartstring::alias::String;
 use std::time::Duration;
 use tokio::fs;
@@ -376,13 +375,7 @@ impl PrfItem {
             .unwrap_or_else(|| filename.map(|s| s.into()).unwrap_or_else(|| "Remote File".into()));
         let data = resp.text();
 
-        let data = data.trim_start_matches('\u{feff}');
-
-        let yaml = serde_yaml_ng::from_str::<Mapping>(data).context("the remote profile data is invalid yaml")?;
-
-        if !yaml.contains_key("proxies") && !yaml.contains_key("proxy-providers") {
-            bail!("profile does not contain `proxies` or `proxy-providers`");
-        }
+        let data = super::subscription::normalize(data.trim_start_matches('\u{feff}'))?;
 
         Self::ensure_companion_items(&mut merge, &mut script, &mut rules, &mut proxies, &mut groups).await?;
 

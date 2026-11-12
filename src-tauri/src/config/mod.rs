@@ -9,6 +9,7 @@ mod prfitem;
 pub mod profiles;
 pub mod runtime;
 pub(crate) mod snapshot;
+mod subscription;
 mod verge;
 
 pub(crate) use self::config::Config;
